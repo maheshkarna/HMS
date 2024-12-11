@@ -1,0 +1,306 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
+
+    <!-- <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/dashboard/"> -->
+
+    <!-- Bootstrap core CSS -->
+   
+
+    <!-- Custom styles for this template -->
+    <!-- <link href="dashboard.css" rel="stylesheet"> -->
+    <link rel="apple-touch-icon" sizes="76x76" href="./css/assets/img/apple-icon.png">
+    <link rel="icon" type="image/png" href="./css/assets/img/favicon.png">
+    <title>
+    HOSTEL MANAGEMENT SYSTEM 
+    </title>
+    <!--   Fonts and icons     -->
+    <link href="./css/assets/js/family.css" rel="stylesheet" />
+    <link href="./lib/jquery/dataTables.css" rel="stylesheet" />
+
+    
+    <!-- Nucleo Icons -->
+    <link href="./css/assets/css/nucleo-icons.css" rel="stylesheet" />
+    <link href="./css/assets/css/nucleo-svg.css" rel="stylesheet" />
+    <!-- Font Awesome Icons -->
+  
+    
+    <link href="./css/assets/css/nucleo-svg.css" rel="stylesheet" />
+    <!-- CSS Files -->
+    <link id="pagestyle" href="./css/assets/css/dashboardStyles.css" rel="stylesheet" />
+    <link id="pagestyle" href="./css/assets/css/dashboard2.css" rel="stylesheet" />
+    <!-- <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet"> -->
+<style>
+.col-form-label{ 
+    font-weight: bolder;
+}
+
+.custom-shadow {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Light shadow */
+    }
+
+    #roomTable_wrapper {
+    height: 400px; /* Set your desired height */
+    overflow-y: auto; /* Add a scrollbar */
+}
+</style>
+</head>
+
+  <body>
+    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Sangameshwara</a>
+      
+      <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+          <a class="nav-link" href="index.html">Sign out</a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar custom-shadow">
+          <div class="sidebar-sticky">
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a class="nav-link " href="home.html">
+                  <span data-feather="home"></span>
+                  Dashboard <span class="sr-only">(current)</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="rooms.html">
+                  <span data-feather="file"></span>
+                  Room Details
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link " href="student.html">
+                  <span data-feather="file"></span>
+                 Student Details
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="fees.html">
+                  <span data-feather="shopping-cart"></span>
+                  Fee Details
+                </a>
+              </li>
+             
+              <li class="nav-item">
+                <a class="nav-link" href="expenses.html">
+                  <span data-feather="bar-chart-2"></span>
+                  Expenses
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link " href="category.html">
+                  <span data-feather="bar-chart-2"></span>
+                  Category
+                </a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+                <h4>Rooms Details</h4>
+            </div>
+            <div class="container mt-2">
+              <div class="row justify-content-center">
+                  <div class="col-md-8" id="add_room_card" style="display: none;">
+                      <div class="card custom-shadow">
+                          <div class="card-header bg-primary text-white">
+                              <h4 id="editH">Add Room</h4>
+                          </div>
+                          <div class="card-body">
+                              <form>
+                                  <!-- Room Number -->
+                                  <div class="form-row">
+                                      <div class="col-md-3">
+                                          <label for="room_number" class="col-form-label">Room Number</label>
+                                      </div>
+                                      <div class="col-md-9">
+                                          <input type="text" class="form-control" id="room_number" placeholder="Enter room number" required>
+                                      </div>
+                                  </div>
+          
+                                  <!-- Capacity -->
+                                  <div class="form-row mt-3">
+                                      <div class="col-md-3">
+                                          <label for="capacity" class="col-form-label">Capacity</label>
+                                      </div>
+                                      <div class="col-md-9">
+                                          <input type="number" class="form-control" id="capacity" placeholder="Enter room capacity" required>
+                                      </div>
+                                  </div>
+          
+                                  <!-- Current Occupancy -->
+                                  <div class="form-row mt-3">
+                                      <div class="col-md-3">
+                                          <label for="current_occupancy" class="col-form-label">Current Occupancy</label>
+                                      </div>
+                                      <div class="col-md-9">
+                                          <input type="number" class="form-control" id="current_occupancy"  value="0" required readonly>
+                                      </div>
+                                  </div>
+          
+                                  <!-- Add Students Section -->
+                                  <input type="hidden" class="form-control" id="room_id">
+          
+                                  <!-- Submit Buttons -->
+                                  <div class="form-row mt-4">
+                                      <div class="col-md-6 text-left">
+                                          <button type="button" class="btn btn-danger" onclick="location.reload()">Back</button>
+                                      </div>
+                                      <div class="col-md-6 text-right">
+                                          <button type="button" class="btn btn-primary" id="updateBtn" style="display: none" onclick="app.rooms.updateRoom()">Update</button>
+                                          <button type="button" class="btn btn-primary" id="saveBtn" onclick="app.rooms.saveRoom()">Submit</button>
+                                      </div>
+                                  </div>
+                              </form>
+                          </div>
+                      </div>
+                  </div>
+          
+                  <!-- Room List Table -->
+                  <div class="col-md-12" id="RoomTable_card">
+                      <div class="card custom-shadow">
+                          <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                              <h4>Room Details</h4>
+                              <button type="button" class="btn btn-light btn-sm" id="addRoomBtn">Add Room</button>
+                          </div>
+                          <div class="card-body">
+                            <!-- <div class="row mb-3">
+                              <div class="col-md-3">
+                                  <select id="filterRoomNumber" class="form-control">
+                                      <option value="">Select Room Number</option>
+                                      
+                                  </select>
+                              </div>
+                              <div class="col-md-3">
+                                  <select id="filterCapacity" class="form-control">
+                                      <option value="">Select Capacity</option>
+                                      <option value="1">1</option>
+                                      <option value="2">2</option>
+                                      <option value="3">3</option>
+                                      <option value="4">4</option>
+                                      <option value="5">5</option>
+                                    
+                                  </select>
+                              </div>
+                              <div class="col-md-3">
+                                  <select id="filterOccupancy" class="form-control">
+                                      <option value="">Select Current Occupancy</option>
+                                      <option value="0">0</option>
+                                      <option value="1">1</option>
+                                      <option value="2">2</option>
+                                      <option value="3">3</option>
+                                      <option value="4">4</option>
+                                      <option value="5">5</option>
+                                     
+                                  </select>
+                              </div>
+                              <div class="col-md-3">
+                                  <button type="button" class="btn btn-success btn-block" id="filterButton">Filter</button>
+                              </div>
+                          </div> -->
+
+                              <table id="roomTable" class="table table-bordered">
+                                  <thead>
+                                      <tr>
+                                          <th>S.No</th>
+                                          <th>Room Number</th>
+                                          <th>Capacity</th>
+                                          <th>Current Occupancy</th>
+                                          <th style="width:25%;">Actions</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody id="rooms_Tbody">
+                                      <!-- Dynamic rows will be appended here -->
+                                  </tbody>
+                              </table>
+                          </div>
+                      </div>
+                  </div>
+
+
+                  <!--- Room Allocations -->
+                  <div id="allocate_Table" class="col-md-6"  class="mt-3" style="display: none;">
+                    <div class="card custom-shadow">
+
+                      <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                        <h5><span id="RoomNum" class="text-warning"></span> - Room Allocation</h5>
+                        <button type="button" class="btn btn-light btn-sm" onclick="location.reload()" >Back</button>
+                    </div>
+                      
+                        <div class="card-body">
+                          <div class="form-row mt-2">
+                            
+                            <div class="col-md-9">
+                              <select class="form-control student-select" id="studentList" required>
+                                <option value="">Select Student</option>
+                            </select>
+                            <input type="hidden" class="form-control" id="room_no">
+                            </div>
+                            <div class="col-md-3">
+                              <button type="button" class="btn btn-primary" id="saveBtn" onclick="app.rooms.saveAllocation()">Add</button>
+                          </div>
+                        </div>
+
+                        <table id="" class="table table-bordered mt-2" >
+                          <thead>
+                              <tr>
+                                  <th>S.No</th>
+                                  <th>Student Name</th>
+                                  <th>Company/Collage</th>
+                                  <th>Actions</th>
+                              </tr>
+                          </thead>
+                          <tbody id="alctStudentTab">
+                              <!-- Dynamic rows will be appended here -->
+                          </tbody>
+                      </table>
+                        </div>
+                    </div>
+                </div>
+              </div>
+          </div>
+        </main>
+        
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+   
+    
+  <script src="./lib/jquery/jquery-3.6.3.min.js"></script>
+  <link href="./css/assets/css/toastr.css" rel="stylesheet"/>
+  <script src="./css/assets/js/toastr.js"></script>
+  <script src="./lib/jquery/dataTables.js"></script>
+
+  <!--   <script src="./lib/bootstrap/js/bootstrap.min.js"></script> -->
+  <script src="./css/assets/js/core/popper.min.js"></script>
+  <script src="./css/assets/js/core/bootstrap.min.js"></script>
+  <script src="./css/assets/js/plugins/perfect-scrollbar.min.js"></script>
+  <script src="./css/assets/js/plugins/smooth-scrollbar.min.js"></script>
+  <script src="./css/assets/js/soft-ui-dashboard.min.js?v=1.0.7"></script>
+  <script src="./css/assets/js/42d5adcbca.js" crossorigin="anonymous"></script>
+  <script src="./js/database.js"></script>
+  <script src="./js/general.js"></script>
+  <script src="./js/db/dateCheckRepo.js"></script>
+  <script src="./js/db/customerTables.js"></script>
+  <script src="./js/db/businessLogic.js"></script>
+  <script src="./js/rooms.js"></script>
+  </body>
+</html>
+

@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
+
+    <title>HOSTEL MANAGEMENT SYSTEM</title>
+
+    <link rel="apple-touch-icon" sizes="76x76" href="./css/assets/img/apple-icon.png">
+    <link rel="icon" type="image/png" href="./css/assets/img/favicon.png">
+    <link href="./css/assets/js/family.css" rel="stylesheet" />
+    <link href="./lib/jquery/dataTables.css" rel="stylesheet" />
+    <link href="./css/assets/css/nucleo-icons.css" rel="stylesheet" />
+    <link href="./css/assets/css/nucleo-svg.css" rel="stylesheet" />
+    <link id="pagestyle" href="./css/assets/css/dashboardStyles.css" rel="stylesheet" />
+    <link id="pagestyle" href="./css/assets/css/dashboard2.css" rel="stylesheet" />
+
+    <style>
+        .col-form-label { 
+            font-weight: bolder;
+        }
+
+        .custom-shadow {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Light shadow */
+        }
+
+        #roomTable_wrapper {
+            height: 400px; /* Set your desired height */
+            overflow-y: auto; /* Add a scrollbar */
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Sangameshwara</a>
+        <ul class="navbar-nav px-3">
+            <li class="nav-item text-nowrap">
+                <a class="nav-link" href="index.html">Sign out</a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="col-md-2 d-none d-md-block bg-light sidebar custom-shadow">
+                <div class="sidebar-sticky">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link" href="home.html">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="rooms.html">Room Details</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="student.html">Student Details</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="fees.html">Fee Details</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="expenses.html">Expenses</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="category.html">Category</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+                    <h4>Category Management</h4>
+                </div>
+
+                <div class="container mt-2">
+                    <div class="row justify-content-center">
+                        <div class="col-md-5" id="category_card">
+                            <!-- Card for Managing Categories -->
+                            <div class="card custom-shadow mb-4">
+                                <div class="card-header bg-primary text-white">
+                                    <h4>Manage Categories</h4>
+                                </div>
+                                <div class="card-body">
+                                    <!-- Category Form -->
+                                    <form id="categoryForm">
+                                        <div class="form-row align-items-end">
+                                            <div class="col-md-8">
+                                                <input type="text" class="form-control" id="category_name" placeholder="Enter Category Name" required>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <button type="button" class="btn btn-success btn-block" onclick="app.category.saveCategory()">Add</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                        
+                                    <!-- Category Table -->
+                                    <div class="table-responsive mt-2" style="max-height: 350px; overflow-y: auto;">
+                                        <table id="categoryTable" class="table table-bordered">
+                                            <thead   style="position: sticky; top: 0; background-color: white; z-index: 1;">
+                                                <tr>
+                                                    <th width="5%">S.No</th>
+                                                    <th>Category Name</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="category_Tbody">
+                                                <!-- Dynamic rows will be appended here -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+
+
+                           
+                        
+                            <!-- Card for Managing Subcategories -->
+                            <div class="col-md-7" id="category_card2">
+                            <div class="card custom-shadow">
+                                <div class="card-header bg-warning text-white">
+                                    <h4>Manage Subcategories</h4>
+                                </div>
+                                <div class="card-body">
+                                    <!-- Subcategory Form -->
+                                    <div class="mt-1">
+                                        <form id="subcategoryForm">
+                                            <div class="form-row align-items-end">
+                                                <div class="col-md-6">
+                                                    <select class="form-control" id="selectCatg" required>
+                                                        <!-- Populate with categories dynamically -->
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <input type="text" class="form-control" id="subcategory_name" placeholder="Enter Subcategory Name" required>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <button type="button" class="btn btn-success btn-block" onclick="app.category.saveSubcategory()">Add</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                        
+                                    <!-- Subcategory Table -->
+                                    <div class="table-responsive mt-2"  style="max-height: 350px; overflow-y: auto;">
+                                        <table id="subcategoryTable" class="table table-bordered">
+                                            <thead  style="position: sticky; top: 0; background-color: white; z-index: 1;">
+                                                <tr>
+                                                    <th width="5%">S.No</th>
+                                                    <th>Subcategory Name</th>
+                                                    <th>Category Name</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="subcategory_Tbody">
+                                                <!-- Dynamic rows will be appended here -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+ 
+    <script src="./lib/jquery/jquery-3.6.3.min.js"></script>
+    <link href="./css/assets/css/toastr.css" rel="stylesheet"/>
+    <script src="./css/assets/js/toastr.js"></script>
+    <script src="./lib/jquery/dataTables.js"></script>
+  
+    <!--   <script src="./lib/bootstrap/js/bootstrap.min.js"></script> -->
+    <script src="./css/assets/js/core/popper.min.js"></script>
+    <script src="./css/assets/js/core/bootstrap.min.js"></script>
+    <script src="./css/assets/js/plugins/perfect-scrollbar.min.js"></script>
+    <script src="./css/assets/js/plugins/smooth-scrollbar.min.js"></script>
+    <script src="./css/assets/js/soft-ui-dashboard.min.js?v=1.0.7"></script>
+    <script src="./css/assets/js/42d5adcbca.js" crossorigin="anonymous"></script>
+    <script src="./js/database.js"></script>
+    <script src="./js/general.js"></script>
+    <script src="./js/db/dateCheckRepo.js"></script>
+    <script src="./js/db/customerTables.js"></script>
+    <script src="./js/db/businessLogic.js"></script>
+    <script src="./js/category.js"></script>
+</body>
+</html>
