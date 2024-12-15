@@ -5,7 +5,11 @@ $(document).ready(() => {
       $('#add_form').toggle(); // Show or hide the block
       $('#StudentTable_card').hide(); 
   });
-    app.student.getAllStudentsData();
+    app.student.getAllStudentsData(0);
+
+    $('#serchStd').click(function(){
+        app.student.getAllStudentsData(1);
+    });
   });
   
   app.student = {
@@ -145,13 +149,26 @@ updateStudent: () => {
   });
 },
     
-getAllStudentsData: () => {
-    var getStudentDataQry = "SELECT * FROM students order by student_id desc";
+getAllStudentsData: (std_id) => {
+    var getStudentDataQry = "";
+    let whereCon ="";
+    let stadIdNo = $('#searchStudentId').val();
+    let statusFilter = $('#statusFilter').val();
+    if(std_id == 0){
+        getStudentDataQry=`SELECT * FROM students order by student_id desc`;
+    }else{ 
+        whereCon += `and student_id = ${stadIdNo}`;
+        if(statusFilter != ''){
+        whereCon += `and status = '${statusFilter}'`;
+        }
+        getStudentDataQry =`SELECT * FROM students where 1 = 1 ${whereCon}`;
+    }
   $.when(
     // app.database.tables.dbOparations.getStudentsData() 
     app.database.tables.dbOparations.getData(getStudentDataQry) 
 
   ).done(function (data) { 
+    $('#students_Tbody').empty();
       let tBody = ``;
 
       // Loop through the data to build each row
@@ -166,7 +183,7 @@ getAllStudentsData: () => {
                   <td>${data[i].join_date}</td>
                   <td>
                       <button class="btn btn-primary btn-sm" onclick="app.student.editStudent(${data[i].student_id})">Edit</button>
-                    
+                      <button class="btn btn-primary btn-sm" onclick="app.student.view(${data[i].student_id})">View</button>
                       <button class="btn btn-${data[i].status =='Active' ? 'success' : 'danger'} btn-sm" onclick="app.student.changeStatus('${data[i].status}',${data[i].student_id})">${data[i].status}</button>
                   </td>
               </tr>`;
@@ -209,6 +226,83 @@ editStudent: (std_id) => {
       $('#description').val(data[0].description);
       $('#student_id').val(data[0].student_id); // Assuming you have a hidden input for the student ID
   });
+},
+
+
+
+view: (std_id) => {
+    var getStudentByIdQry =  `SELECT * FROM students where student_id = ${std_id} `;
+
+  $.when(
+    //   app.database.tables.dbOparations.getStudentById(getStudentByIdQry)
+      app.database.tables.dbOparations.getData(getStudentByIdQry)
+
+  ).done(function (data) { 
+    console.log(data);
+      // Display the form for editing and hide the student list table
+      $('#View_form').show(); // Display the edit student card
+      $('#StudentTable_card').hide(); 
+      
+      // Fill in the form fields with the student data
+      $('#nameView').val(data[0].name);
+      $('#ageView').val(data[0].age);
+      $('#contactView').val(data[0].contact);
+      $('#adhaarView').val(data[0].adhaar); // If applicable
+      $('#addressView').val(data[0].address);
+      $('#purposeView').val(data[0].purpose);
+      $('#company_or_collegeView').val(data[0].company_or_college);
+      $('#statusView').val(data[0].status);
+      $('#feeView').val(data[0].fee);
+      $('#join_dateView').val(data[0].join_date);
+      $('#room_noView').val(data[0].room_no);
+      $('#descriptionView').val(data[0].description);
+      $('#student_idView').val(data[0].student_id); // Assuming you have a hidden input for the student ID
+  });
+
+  var feReport =  `SELECT 
+    s.name AS student_name, 
+    f.fee_id,
+    f.fee_date,
+    f.fee_per_month,
+    f.status,
+    IFNULL(SUM(p.payment_amount), 0) AS total_paid,
+    (f.fee_per_month - IFNULL(SUM(p.payment_amount), 0)) AS pending_amount
+FROM 
+    fee_details f
+LEFT JOIN 
+    payments p ON f.fee_id = p.fee_id
+INNER JOIN 
+    students s ON f.student_id = s.student_id
+WHERE 
+    f.student_id = ${std_id}
+GROUP BY 
+    f.fee_id order by f.fee_id desc`;
+
+  $.when(
+      app.database.tables.dbOparations.getData(feReport)
+
+     ).done(function (data) { 
+    //  console.log(data);
+     let tBody = ``;
+
+     // Loop through the data to build each row
+     for (let i = 0; i < data.length; i++) {
+         tBody += `<tr style=" font-weight : bold">
+                        <td>${i+1}</td>
+                        <td>${data[i].fee_id}</td>
+                        <td>${data[i].fee_date}</td>
+                        <td>${data[i].fee_per_month}</td>
+                        <td>${data[i].total_paid}</td>
+                        <td>${data[i].pending_amount}</td>
+                        <td style="color: ${data[i].status == 'Paid'? 'green' : 'red'};">${data[i].status}</td>
+                    </tr>`;
+     }
+
+     // Append the constructed tbody to the student table
+     //  <button class="btn btn-danger btn-sm" onclick="app.student.deleteStudent(${data[i].student_id})">Delete</button>
+     $('#student_Report').html(tBody);
+
+    })
 },
 
 

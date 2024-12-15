@@ -46,7 +46,7 @@ const createWindow = async () => {
   // win.webContents.openDevTools();
   // win.loadFile("./www/index.html");
   win.maximize();
-  win.loadURL("http://localhost:8686");
+  win.loadURL("http://localhost:8686/index.html");
 
   // win.webContents.session.on(
   //   "select-serial-port",

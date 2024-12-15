@@ -52,7 +52,7 @@
           <div class="sidebar-sticky">
             <ul class="nav flex-column">
               <li class="nav-item">
-                <a class="nav-link active" href="home.html">
+                <a class="nav-link " href="home.html">
                   <span data-feather="home"></span>
                   Dashboard <span class="sr-only">(current)</span>
                 </a>
@@ -89,7 +89,8 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link " href="changePass.html">
+                <a class="nav-link active" href="changePass.html">
+                  <span data-feather="bar-chart-2"></span>
                   Change Password
                 </a>
               </li>
@@ -99,95 +100,48 @@
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
           <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-            <h1 class="h2">Dashboard</h1>
+            <h1 class="h2">Manage Password </h1>
           </div>
           
-          <div class="row">
-            <div class="col-lg-3 col-6">
-              <!-- small box -->
-              <div class="small-box bg-info">
-                <div class="inner">
-                  <p>Fee Details</p>
-                </div>
-                <div class="icon">
-                  <i class="ion ion-bag"></i>
-                </div>
-                <a href="fees.html" class="small-box-footer" contenteditable="false" style="cursor: pointer;">More info <i class="fas fa-arrow-circle-right"></i></a>
-              </div>
-            </div>
-            <!-- ./col -->
-            <div class="col-lg-3 col-6">
-              <!-- small box -->
-              <div class="small-box bg-success">
-                <div class="inner">
-                  <p>Room Details</p>
-                </div>
-                <div class="icon">
-                  <i class="ion ion-stats-bars"></i>
-                </div>
-                <a href="rooms.html" class="small-box-footer" contenteditable="false" style="cursor: pointer;">More info <i class="fas fa-arrow-circle-right"></i></a>
-              </div>
-            </div>
-            <!-- ./col -->
-            <div class="col-lg-3 col-6">
-              <!-- small box -->
-              <div class="small-box bg-warning">
-                <div class="inner">
-                  <p>Student Details</p>
-                </div>
-                <div class="icon">
-                  <i class="ion ion-person-add"></i>
-                </div>
-                <a href="student.html" class="small-box-footer" contenteditable="false" style="cursor: pointer;">More info <i class="fas fa-arrow-circle-right"></i></a>
-              </div>
-            </div>
-            <!-- ./col -->
-            <div class="col-lg-3 col-6">
-              <!-- small box -->
-              <div class="small-box bg-danger">
-                <div class="inner">
-                  <p>Expenses</p>
-                </div>
-                <div class="icon">
-                  <i class="ion ion-pie-graph"></i>
-                </div>
-                <a href="expenses.html" class="small-box-footer" contenteditable="false" style="cursor: pointer;">More info <i class="fas fa-arrow-circle-right"></i></a>
-              </div>
-            </div>
-            <!-- ./col -->
-          </div>
-          <div class="row">
-            <div class="container mt-5">
-              <div class="card">
+          <div class="row justify-content-center">
+            <div class="col-md-6">
+              <div class="card custom-shadow">
                 <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-                  <h4>Monthly Report</h4>
-                  <span id="totalStudents" class="badge bg-light text-dark px-3 py-2"style="font-size:15px;">
-                      Total Members:  <span id="stdCount">0</span>
-                  </span>
+                  <h4>Change Password</h4>
+                  <button class="btn btn-light btn-sm" onclick="app.password.changePassword()">Change</button>
               </div>
-                  <div class="card-body">
-                      <div class="table-responsive">
-                          <table class="table table-bordered table-hover">
-                              <thead  style="background-color: rgb(255, 210, 8);">
-                                  <tr>
-                                    <th>Month</th>
-                                    <th>Expenses</th>
-                                    <th>Fee Collected</th>
-                                    <th>Pending Fee</th>
-                                    <th>Profit/Loss</th>  
-                                  </tr>
-                              </thead>
-                              <tbody id="reportTableBody">
-                                  <!-- Dynamic Rows Will Be Appended Here -->
-                              </tbody>
-                          </table>
-                      </div>
-                  </div>
+                <div class="card-body">
+                    <!-- Change Password Form -->
+                    <form id="changePasswordForm">
+                        <div class="form-row align-items-end">
+                          <div class="col-md-12 mb-3">
+                            <label for="username">Username</label>
+                            <input type="text" class="form-control" id="username" placeholder="Enter Username" readonly required>
+                         </div>
+                            <div class="col-md-12 mb-3">
+                                <label for="current_password">Current Password</label>
+                                <input type="text" class="form-control" id="current_password" readonly placeholder="Enter Current Password" required>
+                            </div>
+                            <div class="row px-1" id="updatePass_block" style="display: none">
+                            <div class="col-md-12 mb-3">
+                                <label for="new_password">New Password</label>
+                                <input type="text" class="form-control" id="new_password" placeholder="Enter New Password" required>
+                            </div>
+                          
+                              <div class="col-md-12 mb-3">
+                                <label for="confirm_password">Confirm New Password</label>
+                                <input type="text" class="form-control" id="confirm_password" placeholder="Confirm New Password" required>
+                            </div>
+                            <div class="col-md-12">
+                                <button type="button" class="btn btn-success btn-block" onclick="app.password.updatePassword()">Change Password</button>
+                            </div>
+                          </div>
+                        </div>
+                    </form>
+                </div>
               </div>
+            </div>
           </div>
-          
-          </div>
-          
         </main>
       </div>
     </div>
@@ -210,7 +164,69 @@
   <script src="./js/database.js"></script>
   <script src="./js/general.js"></script>
   <script src="./js/db/customerTables.js"></script>
-  <script src="./js/home.js"></script>
+  <!-- <script src="./js/home.js"></script> -->
   <script src="./js/db/businessLogic.js"></script>
+  <script>
+    $(document).ready(() => {
+    app.database.createDB();
+    app.password.getLog();
+   });
+   app.password = {
+
+    getLog: () => {
+        
+        const selectLog = `SELECT * from logins`;
+        $.when(app.database.tables.dbOparations.getData(selectLog))
+            .done(function (data) {
+              // console.log(data);
+              $('#username').val(data[0].USERNAME);
+              $('#current_password').val(data[0].PASSWORD);
+            })  
+    },
+
+        updatePassword :  () =>{
+
+        let username = $('#username').val();
+        let currentPassword = $('#current_password').val();
+        let newPassword = $('#new_password').val();
+        let confirmPassword = $('#confirm_password').val();
+
+        // Validation
+        if (!username || !currentPassword || !newPassword || !confirmPassword) {
+          toastr.error('All fields are required.', '', { timeOut: 1000 });
+          return;
+        }
+
+        if (newPassword !== confirmPassword) {
+          toastr.error('New Password and Confirm Password do not match.', '', { timeOut: 1000 });
+          return;
+        }
+
+        // SQL Query to Update Password
+        const updateQuery = `
+          UPDATE logins
+          SET PASSWORD = '${newPassword}'
+          WHERE USERNAME = '${username}' AND PASSWORD = '${currentPassword}';
+        `;
+
+        // Execute the update query
+        $.when(app.database.tables.dbOparations.execute(updateQuery))
+          .done(function (result) {
+            toastr.success('Password updated successfully!', '', { timeOut: 1000 });
+            location.reload();
+          })
+          .fail(function (error) {   
+           toastr.error('An error occurred while updating the password.', '', { timeOut: 1000});
+      
+          });
+        },
+
+    changePassword : ()=>{
+      $('#updatePass_block').toggle(); // Show or hide the block
+    }
+
+   }
+  </script>
+
   </body>
 </html>

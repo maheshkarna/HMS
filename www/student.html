@@ -46,8 +46,9 @@
 </head>
 
   <body>
-    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
-      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Sangameshwara</a>
+    <nav class="navbar  sticky-top bg-dark flex-md-nowrap p-0">
+      <!-- <a class="navbar-brand col-sm-3 col-md-2 mr-0 gradient-heading" href="#">HMS</a> -->
+      <h3 class="navbar gradient-heading">HMS</h3>
       
       <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
@@ -87,7 +88,7 @@
               </li>
              
               <li class="nav-item">
-                <a class="nav-link" href="expensive.html">
+                <a class="nav-link" href="expenses.html">
                   <span data-feather="bar-chart-2"></span>
                   Expenses
                 </a>
@@ -96,6 +97,11 @@
                 <a class="nav-link " href="category.html">
                   <span data-feather="bar-chart-2"></span>
                   Category
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link " href="changePass.html">
+                  Change Password
                 </a>
               </li>
             </ul>
@@ -160,8 +166,8 @@
                                         <label for="purpose" class="col-form-label">Purpose</label>
                                         <select class="form-control" id="purpose" required>
                                           <option value="">-- Select Purpose --</option>
-                                          <option value="Active">Study</option>
-                                          <option value="Inactive">Job</option>
+                                          <option value="Study">Study</option>
+                                          <option value="Job">Job</option>
                                           <option value="Others">Others</option>
                                       </select>
                                    
@@ -229,14 +235,149 @@
             </div>
         </div>
         
+        <!-- View Data  Start-->
+
+        <div class="container m-3" id="View_form" style="display: none;">
+          <div class="row justify-content-center">
+              <div class="col-md-12">
+                  <div class="card custom-shadow">
+                      <div class="card-header bg-primary text-white">
+                          <h4>View Student</h4>
+                      </div>
+                      <div class="card-body">
+                          <form>
+                              <!-- Name and Age -->
+                              <div class="form-row">
+                                  <div class="col-md-3">
+                                      <label for="name" class="col-form-label">Name</label>
+                                      <input type="text" class="form-control" id="nameView" placeholder="Enter student name" required readonly>
+                                  </div>
+                                  <input type="hidden" id="student_id" />
+                                  <div class="col-md-3">
+                                      <label for="age" class="col-form-label">Age</label>
+                                      <input type="number" class="form-control" id="ageView" placeholder="Enter age" required readonly>
+                                  </div>
+
+                                  <div class="col-md-3">
+                                    <label for="contact" class="col-form-label">Contact</label>
+                                    <input type="text" class="form-control" id="contactView" placeholder="Enter contact number" required readonly>
+                                </div>
+                                <div class="col-md-3">
+                                  <label for="adhaar" class="col-form-label">Aadhar</label>
+                                  <input type="text" class="form-control" id="adhaarView" placeholder="Enter Aadhar number" required readonly>
+                                </div>
+                              </div>
+      
+                              <!-- Address and Purpose -->
+                              <div class="form-row mt-1">
+                                <div class="col-md-3">
+                                    <label for="address" class="col-form-label">Address</label>
+                                    <input type="text" class="form-control" id="addressView" placeholder="Enter address" required readonly>
+                                </div>
+                              
+                                  <div class="col-md-3">
+                                    <label for="purpose" class="col-form-label">Purpose</label>
+                                    <input type="text" class="form-control" id="purposeView" placeholder="Enter address" required readonly>
+                                  </div>
+                                  <div class="col-md-3">
+                                    <label for="company_or_college" class="col-form-label">Company or College</label>
+                                    <input type="text" class="form-control" id="company_or_collegeView" placeholder="Enter company or college name" readonly>
+                                </div>
+                                <div class="col-md-3">
+                                  <label for="join_date" class="col-form-label">Join Date</label>
+                                  <input type="date" class="form-control" id="join_dateView" required readonly>
+                                </div>
+                              </div>
+      
+                             
+      
+                              <!-- Join Date and Room Number -->
+                              <div class="form-row mt-1">
+                                 <div class="col-md-3">
+                                  <label for="fee" class="col-form-label">Fee/Month Number</label>
+                                  <input type="number" class="form-control" id="feeView" value="" required readonly>
+                                 </div>
+
+                                  <div class="col-md-3">
+                                      <label for="room_no" class="col-form-label">Room Number</label>
+                                      <input type="number" class="form-control" id="room_noView" value="0" required readonly>
+                                  </div>
+
+                                  <div class="col-md-6">
+                                    <label for="description" class="col-form-label">Description</label>
+                                    <input type="number" class="form-control" id="descriptionView" value="" required readonly>
+                                    
+                                </div>
+                              </div>
+
+                              <div class="card mt-2">
+                                
+                                  <h5 class="pl-2 pt-2"><u>Fee Details</u></h5>
+                              
+                                <div class="card-body">
+                                    <table class="table table-bordered" >
+                                        <thead style="background-color: rgb(237, 182, 2);">
+                                            <tr>
+                                                <th>S.No</th>
+                                                <th>Fee ID</th>
+                                                <th>Fee Date</th>
+                                                <th>Fee Per Month</th>
+                                                <th>Total Paid</th>
+                                                <th>Pending Amount</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="student_Report">
+                                            <!-- Rows will be appended dynamically -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            
+
+                              <!-- Submit Button -->
+                              <div class="form-row mt-4">
+                                <div class="col-md-6 text-left">
+                                  <button type="button" onclick="location.reload()" class="btn btn-danger">Back</button>
+                              </div>
+                              </div>
+                          </form>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        </div>
+
+        <!-- View Data End  -->
+
+
+
+
         <div class="col-md-12" id="StudentTable_card">
           <div class="card custom-shadow">
               <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
                   <h4>Student List</h4>
-                  <button type="button" class="btn btn-light btn-sm" id="addStudentBtn">Add Student</button>
-              </div>
+      
+                <div class="d-flex align-items-center">
+                 
+                    <!-- Status Filter -->
+                    <select class="form-control mx-1" id="statusFilter">
+                        <option value="">All Status</option>
+                        <option value="Active">Active</option>
+                        <option value="Inactive">Inactive</option>
+                    </select>
+                    
+                    <!-- Student ID Search -->
+                    <input type="number" class="form-control col-md-3 mx-1" id="searchStudentId" placeholder="Student ID">
+                    
+                    <!-- Apply Filters Button -->
+                    <button class="btn btn-light btn-sm mx-1" id="serchStd">Search</button>
+                    <button type="button" class="btn btn-light btn-sm" id="addStudentBtn">Add Student</button>
+                  </div>
+            </div>
+
               <div class="card-body">
-                <div class="table-responsive" style="max-height: 500px; overflow-y: auto;">
+                <div class="table-responsive" style="max-height: 450px; overflow-y: auto;">
                     <table id="studentTable" class="table table-bordered">
                         <thead style="position: sticky; top: 0; background-color: white; z-index: 1;">
                             <tr>

@@ -54,7 +54,7 @@
 
   <body>
     <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
-      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Sangameshwara</a>
+      <h3 class="navbar gradient-heading">HMS</h3>
       
       <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
@@ -106,6 +106,11 @@
                   Category
                 </a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link " href="changePass.html">
+                  Change Password
+                </a>
+              </li>
             </ul>
           </div>
         </nav>
@@ -120,12 +125,15 @@
                   <div class="col-md-12" id="expenses_card">
                       <div class="card custom-shadow mb-2" >
                         <div class="card-header bg-primary text-white">
-                          <h4>Manage Expenses</h4>
+                          
                           <form id="filterForm" class="form-row mt-2">
-                              <div class="col-md-3">
+                            <div class="col-md-2">
+                              <h4>Expenses</h4>
+                          </div>
+                              <div class="col-md-2">
                                   <input type="date" class="form-control" id="from_date" placeholder="From Date">
                               </div>
-                              <div class="col-md-3">
+                              <div class="col-md-2">
                                   <input type="date" class="form-control" id="to_date" placeholder="To Date">
                               </div>
                               <div class="col-md-2">
@@ -175,7 +183,7 @@
                                       </div>
                                   </div>
                               </form>
-                              <div class="table-responsive mt-4" style="max-height: 350px; overflow-y: auto;">
+                              <div class="table-responsive mt-4" style="max-height: 325px; overflow-y: auto;">
                                   <table id="expensesTable" class="table table-bordered" >
                                       <thead style="position: sticky; top: 0; background-color: white; z-index: 1;">
                                           <tr>

@@ -109,6 +109,7 @@ GROUP BY
                       <td>${data[i].room_number}</td>
                       <td>${data[i].capacity}</td>
                       <td>${data[i].student_count}</td>
+                      <td>${data[i].capacity - data[i].student_count}</td>
                       <td>
                           <button class="btn btn-primary btn-sm" onclick="app.rooms.editRoom(${data[i].room_id})">Edit</button>
                           <button class="btn btn-danger btn-sm" onclick="app.rooms.deleteRoom(${data[i].room_id})">Dlt</button>
@@ -154,14 +155,14 @@ GROUP BY
   
   getAllStudentData: () => {
 
-    let getStudenData = `SELECT * FROM students where status = 'Active';`;
+    let getStudenData = `SELECT * FROM students where status = 'Active' order by student_id desc;`;
     $.when(
         app.database.tables.dbOparations.getData(getStudenData)
     ).done(function (data) { 
         let tBody = `<option value="">--Select Student to Allocate--</option>`;
         // Use a for loop to iterate over the data
         for (let i = 0; i < data.length; i++) {
-        tBody += `<option value="${data[i]['student_id']}">${data[i]['name']}</option>`;
+        tBody += `<option value="${data[i]['student_id']}">${data[i]['student_id']} - ${data[i]['name']}</option>`;
         }
 
         // Append the constructed tbody to the table

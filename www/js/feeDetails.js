@@ -42,7 +42,7 @@ app.fee = {
             tBody += `
                 <tr>
                     <td>${i + 1}</td>
-                    <td>${data[i].name}</td>
+                    <td>${data[i].student_id} - ${ data[i].name}</td>
                     <td>${data[i].fee_date}</td>
                     <td>${data[i].fee_per_month}</td>
                     <td>${data[i].status}</td>
@@ -268,8 +268,8 @@ applyFilters: () => {
 
               tBody += `
                   <tr>
-                      <td>${i + 1}</td>
-                      <td>${data[i].name}</td>
+                      <td> ${i + 1}</td>
+                      <td>${data[i].student_id} - ${data[i].name}</td>
                       <td>${data[i].fee_date}</td>
                       <td>${data[i].fee_per_month}</td>
                       <td>${data[i].status}</td>
